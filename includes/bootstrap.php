@@ -78,6 +78,9 @@ function need_login(): void {
         note('This account is disabled. Please contact an administrator.');
         header('Location: login.php'); exit;
     }
+    if (current_user_is_admin() && basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) !== 'admin.php') {
+        header('Location: admin.php'); exit;
+    }
 }
 function current_user_is_admin(): bool {
     global $pdo;
@@ -118,8 +121,11 @@ function head(string $title): void {
     global $pdo;
     echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
     if (uid()) {
-        echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>';
-        if (current_user_is_admin()) echo '<a href="admin.php">Admin</a>';
+        if (current_user_is_admin()) {
+            echo '<a href="admin.php">Admin dashboard</a>';
+        } else {
+            echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>';
+        }
         echo '<form method="post" action="auth/logout.php"><input type="hidden" name="csrf" value="' . e(token()) . '"><button class="linkbtn">Log out</button></form>';
     } else { echo '<a href="login.php">Log in</a><a href="register.php">Join free</a>'; }
     echo '</nav></header><main>'; show_note();

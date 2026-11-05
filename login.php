@@ -1,6 +1,6 @@
 <?php
 require __DIR__.'/includes/bootstrap.php';
-if (uid()) { header('Location: dashboard.php'); exit; }
+if (uid()) { header('Location: ' . (current_user_is_admin() ? 'admin.php' : 'dashboard.php')); exit; }
 $err = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     check_token();
@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $err = 'Too many failed attempts. Please wait 15 minutes and try again.';
     } else {
         try {
-            $s = $pdo->prepare('SELECT id,password_hash,is_active FROM users WHERE email=?');
+            $s = $pdo->prepare('SELECT id,password_hash,is_active,role FROM users WHERE email=?');
             $s->execute([$email]); $u = $s->fetch();
         } catch (PDOException $exception) {
             if ($exception->getCode() !== '42S22') throw $exception;
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $pdo->prepare('DELETE FROM login_attempts WHERE email=?')->execute([$email]);
                 session_regenerate_id(true); $_SESSION['uid'] = (int)$u['id'];
-                header('Location: dashboard.php'); exit;
+                header('Location: ' . (($u['role'] ?? 'member') === 'admin' ? 'admin.php' : 'dashboard.php')); exit;
             }
         } else {
             $pdo->prepare('INSERT INTO login_attempts(email,ip) VALUES(?,?)')->execute([$email, $ip]);
