@@ -1,0 +1,9 @@
+# Local and production secrets
+/config.php
+/.env
+/.env.*
+
+# Logs and editor/OS files
+*.log
+.DS_Store
+.vscode/

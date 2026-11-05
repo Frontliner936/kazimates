@@ -1,41 +1,49 @@
 # KaziMates PHP + MySQL
 
-KaziMates is a PHP/MySQL community app for job seekers. It includes account registration and login, career profiles, member search, connection requests, and private messaging for accepted connections.
+KaziMates is a PHP/MySQL community app for job seekers. It includes registration and login, career profiles, member discovery, connection requests, and private messaging for accepted connections.
 
-## Requirements
+## Deploy to Railway
 
-- PHP 8.1 or newer
-- MySQL 8+ or compatible MariaDB
-- PHP extensions: PDO MySQL and mbstring
-- Apache with `mod_rewrite` is not required by the current app; the PHP files can be served directly
+The repository includes a Dockerfile. Railway detects a root-level file named `Dockerfile` and uses it to build the service. The container runs Apache with PHP 8.3 and the PDO MySQL and mbstring extensions, and its startup script makes Apache listen on Railway's injected `PORT`.
+
+1. In Railway, create a project and add a **MySQL** service.
+2. Add a service from the `Frontliner936/kazimates` GitHub repository and deploy the `main` branch. Railway should detect the Dockerfile automatically.
+3. In the PHP app service's **Variables**, add references to the MySQL service. Replace `MySQL` below with the exact Railway service name if yours differs:
+
+   ```text
+   DB_HOST=${{MySQL.MYSQLHOST}}
+   DB_PORT=${{MySQL.MYSQLPORT}}
+   DB_NAME=${{MySQL.MYSQLDATABASE}}
+   DB_USER=${{MySQL.MYSQLUSER}}
+   DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}
+   ```
+
+   Railway resolves these references using the database service's variables. Do not paste database passwords into GitHub or source files. The app can also read the `MYSQL_URL` or `DATABASE_URL` connection string if supplied.
+
+4. Import `database.sql` into Railway's MySQL database. The SQL creates tables inside the currently selected database; it does not create or switch databases. To import from your computer, temporarily enable a MySQL TCP Proxy in the database service's **Settings → Networking**. Use the generated public host and port with a MySQL client, and enter the password only at its prompt:
+
+   ```sh
+   mysql --host=<MYSQL_PUBLIC_HOST> --port=<MYSQL_PUBLIC_PORT> --user=<MYSQLUSER> --password <MYSQLDATABASE> < database.sql
+   ```
+
+   Use values shown by Railway for `MYSQL_PUBLIC_URL`, `MYSQLUSER`, and `MYSQLDATABASE`. Turn off the TCP Proxy after the import if you do not need outside database access. Confirm the app service's `DB_*` variables point to the same MySQL service.
+5. After the app deploys, open the app service's **Settings → Networking** and generate a Railway domain. Railway provides HTTPS for its public domain.
+6. Open the generated domain and test registration, login, profile editing, member search, connection requests, and messaging with two test accounts.
+7. Enable a database backup plan before using the app with real user data. Railway's MySQL is a single-node service by default; review Railway's backup and high-availability options for production use.
+
+If deployment fails, check the app service's build and deploy logs. Common causes are missing variable references, importing the SQL schema into a different database, or not adding a public domain.
 
 ## Local setup (XAMPP)
 
-1. Copy this repository into `C:\xampp\htdocs\kazimates`.
-2. Start Apache and MySQL.
-3. Import `database.sql` using phpMyAdmin.
-4. Copy `config.example.php` to `config.php` and set the database host, database name, user, and password. Do not commit `config.php` or real credentials.
-5. Open `http://localhost/kazimates/` and register an account.
+1. Copy the repository into `C:\xampp\htdocs\kazimates` and start Apache and MySQL.
+2. Create a database named `kazimates` using phpMyAdmin, then select it and import `database.sql`.
+3. Copy `config.example.php` to `config.php` and set your local database credentials. Never commit a real `config.php`.
+4. Open `http://localhost/kazimates/` and register an account.
 
-If you already have a previous KaziMates database, back it up before applying `migration_v2.sql` as needed. Do not re-import `database.sql` into a live database because it creates fresh application tables.
+## Requirements and security notes
 
-## Deployment checklist
+The app requires PHP 8.1+ with PDO MySQL and mbstring and MySQL 8+ or compatible MariaDB. Railway's Dockerfile uses PHP 8.3. Configuration is read from `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` (or Railway MySQL variables), with `config.php` as a fallback for conventional PHP hosts.
 
-1. Choose a PHP host that supports PHP 8.1+, MySQL/MariaDB, PDO MySQL, and mbstring.
-2. Create a dedicated database and a database user with access only to that database; import `database.sql` for a fresh installation.
-3. Upload the application files, excluding `.git` and any local `config.php`, and configure the host's document root to the application directory.
-4. Create `config.php` on the server from `config.example.php` and enter the production database credentials. Keep it outside version control and restrict its filesystem permissions.
-5. Enable HTTPS. The session cookie is marked Secure when requests arrive over HTTPS.
-6. Test registration, login, profile updates, discovery, a declined-request cooldown, accept/decline actions, and messaging with two test accounts before inviting users.
-7. Set up database backups, error logging, and a privacy policy. This starter does not include email verification, password reset, abuse reporting/blocking, or account deletion; add these before a broad public launch.
+Passwords are stored using PHP password hashing. Database operations use PDO prepared statements, forms use CSRF tokens, and rendered values are escaped. Registration/profile choices and message lengths are validated server-side. A declined connection can be retried by its original sender after the seven-day period from the decline. Chat is page-refresh based and shows the latest 300 messages.
 
-## Security and behavior notes
-
-- Passwords are stored with PHP's `password_hash()` and checked with `password_verify()`.
-- Database operations use PDO prepared statements. Forms use CSRF tokens and HTML output is escaped.
-- Registration/profile choices are validated against server-side allowed lists. Message length is enforced server-side.
-- A declined connection request can be retried by its original sender after the seven-day cooldown, measured from the decline action. A declined recipient cannot immediately create a reverse request.
-- Chat is page-refresh based, not real-time. The current chat view displays the latest 300 messages.
-- Member search uses user-selected regions only; the app does not collect GPS or expose home addresses.
-
-This project is a functional starter, not a fully production-hardened public service. Review hosting configuration and complete the deployment checklist before launch.
+This remains a starter app, not a fully production-hardened public service. Before a broad launch, add email verification, password reset, abuse reporting/blocking, account deletion, a privacy policy, and a tested backup/restore process. Member location is user-selected region only; the app does not collect GPS or expose home addresses.
