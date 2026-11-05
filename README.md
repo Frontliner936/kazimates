@@ -4,7 +4,7 @@ KaziMates is a PHP/MySQL community app for job seekers. It includes registration
 
 ## Deploy to Railway
 
-The repository includes a Dockerfile. Railway detects a root-level file named `Dockerfile` and uses it to build the service. The container runs Apache with PHP 8.3 and the PDO MySQL and mbstring extensions, and its startup script makes Apache listen on Railway's injected `PORT`.
+The repository includes a Dockerfile. Railway detects a root-level file named `Dockerfile` and uses it to build the service. The container runs Nginx with PHP 8.3-FPM and the PDO MySQL and mbstring extensions. Its startup script configures Nginx to listen on Railway's injected `PORT`; Apache is not used.
 
 1. In Railway, create a project and add a **MySQL** service.
 2. Add a service from the `Frontliner936/kazimates` GitHub repository and deploy the `main` branch. Railway should detect the Dockerfile automatically.
@@ -42,7 +42,7 @@ If deployment fails, check the app service's build and deploy logs. Common cause
 
 ## Requirements and security notes
 
-The app requires PHP 8.1+ with PDO MySQL and mbstring and MySQL 8+ or compatible MariaDB. Railway's Dockerfile uses PHP 8.3. Configuration is read from `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` (or Railway MySQL variables), with `config.php` as a fallback for conventional PHP hosts.
+The app requires PHP 8.1+ with PDO MySQL and mbstring and MySQL 8+ or compatible MariaDB. Railway's Dockerfile uses PHP 8.3-FPM and Nginx. Configuration is read from `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, and `DB_PASSWORD` (or Railway MySQL variables), with `config.php` as a fallback for conventional PHP hosts.
 
 Passwords are stored using PHP password hashing. Database operations use PDO prepared statements, forms use CSRF tokens, and rendered values are escaped. Registration/profile choices and message lengths are validated server-side. A declined connection can be retried by its original sender after the seven-day period from the decline. Chat is page-refresh based and shows the latest 300 messages.
 
