@@ -83,7 +83,7 @@ function pending_total(PDO $db): int {
 function badge(int $n): string { return $n > 0 ? '<span class="badge">' . min($n, 99) . ($n > 99 ? '+' : '') . '</span>' : ''; }
 function head(string $title): void {
     global $pdo;
-    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="dashboard.php">🟢 KaziMates</a><nav>';
+    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
     if (uid()) {
         echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>'
            . '<form method="post" action="auth/logout.php"><input type="hidden" name="csrf" value="' . e(token()) . '"><button class="linkbtn">Log out</button></form>';
