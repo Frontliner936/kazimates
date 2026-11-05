@@ -5,6 +5,11 @@ RUN apt-get update \
     && docker-php-ext-install pdo_mysql mbstring \
     && rm -rf /var/lib/apt/lists/*
 
+# mod_php requires prefork; disable other Apache MPMs to avoid startup conflicts.
+RUN if [ -e /etc/apache2/mods-enabled/mpm_event.load ]; then a2dismod mpm_event; fi \
+    && if [ -e /etc/apache2/mods-enabled/mpm_worker.load ]; then a2dismod mpm_worker; fi \
+    && a2enmod mpm_prefork
+
 WORKDIR /var/www/html
 COPY . /var/www/html
 COPY railway-start.sh /usr/local/bin/railway-start
