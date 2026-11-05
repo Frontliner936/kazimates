@@ -27,7 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: profile.php'); exit;
         } catch (PDOException $exception) {
             if ($pdo->inTransaction()) $pdo->rollBack();
-            $error = 'That email may already be registered. Please try another.';
+            if ((int) ($exception->errorInfo[1] ?? 0) === 1062) {
+                $error = 'That email is already registered. Please use another email or log in.';
+            } else {
+                error_log('KaziMates registration database error [' . $exception->getCode() . ']: ' . $exception->getMessage());
+                $error = 'Account creation failed because the database is not ready. Please contact the site administrator.';
+            }
         }
     }
 }
