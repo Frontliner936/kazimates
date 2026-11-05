@@ -31,6 +31,10 @@ The repository includes a Dockerfile. Railway detects a root-level file named `D
 6. Open the generated domain and test registration, login, profile editing, member search, connection requests, and messaging with two test accounts.
 7. Enable a database backup plan before using the app with real user data. Railway's MySQL is a single-node service by default; review Railway's backup and high-availability options for production use.
 
+### Enable chat file attachments on an existing database
+
+Before deploying the attachment update, connect HeidiSQL to the KaziMates MySQL service, select the app's database, and run `migration_attachments.sql`. This additive migration creates the attachment table without changing existing accounts or messages. New installs already get the table from `database.sql`. Chat accepts one JPG, PNG, GIF, WebP, PDF, or TXT attachment per message, up to 5 MB; files are stored in MySQL and downloads are limited to the connected conversation participants.
+
 If deployment fails, check the app service's build and deploy logs. Common causes are missing variable references, importing the SQL schema into a different database, or not adding a public domain.
 
 ## Local setup (XAMPP)

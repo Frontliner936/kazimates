@@ -29,3 +29,14 @@ body{background:#f7f8fc;color:#17233e}header{height:76px;padding:0 max(6vw,24px)
 @media(max-width:800px){.landing-hero{margin-top:18px;padding:38px 26px 30px}.landing-visual{min-height:350px;margin:4px 12px 8px}.note-top{right:0}.note-bottom{left:0}}
 @media(max-width:480px){.landing-hero{border-radius:22px;padding:30px 18px 24px}.landing-visual{min-height:285px;margin:0 7px}.visual-note{max-width:190px}.note-top{top:8px}.note-bottom{bottom:5px}.landing-cta:after{font-size:180px;right:7%;top:-45px}}
 @media(prefers-reduced-motion:reduce){.value-card{transition:none}.value-card:hover{transform:none}}
+
+/* Chat attachment controls */
+.chat-compose{margin-top:18px;display:grid;gap:10px}
+.chat-compose label{margin:0;color:#273657}
+.chat-compose label span{display:block;margin-top:4px;color:#7a849a;font-size:12px;font-weight:400}
+.chat-compose input[type=file]{margin:0;padding:10px;background:#fbfcff;border:1px dashed #cbd6ed;border-radius:10px;font-size:13px}
+.chat-compose textarea{min-height:92px;resize:vertical}
+.chat-compose button{justify-self:start}
+.message-attachment{display:flex;align-items:center;gap:10px;max-width:100%;margin:8px 0;padding:10px 12px;border:1px solid #dbe4f7;border-radius:12px;background:#fff;color:#2459d3;overflow-wrap:anywhere}
+.message-attachment>span{display:grid;place-items:center;flex:0 0 34px;height:34px;border-radius:10px;background:#edf2ff;font-size:20px}
+.message-attachment small{display:block;margin:3px 0 0;color:#78839a;font-size:11px}

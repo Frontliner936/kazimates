@@ -6,6 +6,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && sed -ri 's/^;?clear_env = .*/clear_env = no/' /usr/local/etc/php-fpm.d/www.conf
 
+RUN printf 'upload_max_filesize=6M\npost_max_size=7M\nmax_file_uploads=1\n' > /usr/local/etc/php/conf.d/uploads.ini
+
 WORKDIR /var/www/html
 COPY --chown=www-data:www-data . /var/www/html
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
