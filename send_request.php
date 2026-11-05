@@ -6,8 +6,14 @@ check_token();
 $me = uid();
 $other = filter_input(INPUT_POST, 'user_id', FILTER_VALIDATE_INT) ?: 0;
 if (!$other || $other === $me) { note('Invalid member.'); header('Location: discover.php'); exit; }
-$statement = $pdo->prepare('SELECT 1 FROM profiles WHERE user_id=? AND is_visible=1');
-$statement->execute([$other]);
+$statement = $pdo->prepare('SELECT 1 FROM profiles p JOIN users u ON u.id=p.user_id WHERE p.user_id=? AND p.is_visible=1 AND u.is_active=1');
+try {
+    $statement->execute([$other]);
+} catch (PDOException $exception) {
+    if ($exception->getCode() !== '42S22') throw $exception;
+    $statement = $pdo->prepare('SELECT 1 FROM profiles WHERE user_id=? AND is_visible=1');
+    $statement->execute([$other]);
+}
 if (!$statement->fetchColumn()) { note('That member is not available.'); header('Location: discover.php'); exit; }
 if (connected($pdo, $me, $other)) { note('You are already connected.'); header('Location: discover.php'); exit; }
 $statement = $pdo->prepare('SELECT id,sender_id,receiver_id,status,created_at FROM connection_requests WHERE (sender_id=? AND receiver_id=?) OR (sender_id=? AND receiver_id=?) ORDER BY id DESC LIMIT 1');

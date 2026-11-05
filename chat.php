@@ -7,10 +7,16 @@ if (!$other || $other === $me || !connected($pdo, $me, $other)) {
     note('Messaging is available only with an accepted connection.');
     header('Location: requests.php'); exit;
 }
-$statement = $pdo->prepare('SELECT full_name FROM users WHERE id=?');
-$statement->execute([$other]);
+$statement = $pdo->prepare('SELECT full_name,is_active FROM users WHERE id=?');
+try {
+    $statement->execute([$other]);
+} catch (PDOException $exception) {
+    if ($exception->getCode() !== '42S22') throw $exception;
+    $statement = $pdo->prepare('SELECT full_name FROM users WHERE id=?');
+    $statement->execute([$other]);
+}
 $person = $statement->fetch();
-if (!$person) { header('Location: requests.php'); exit; }
+if (!$person || (int) ($person['is_active'] ?? 1) !== 1) { note('That member is no longer available.'); header('Location: requests.php'); exit; }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     check_token();

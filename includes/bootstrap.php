@@ -61,7 +61,40 @@ try {
 function e($v): string { return htmlspecialchars((string) ($v ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 function opts(array $list, string $sel = ''): string { $o = ''; foreach ($list as $x) $o .= '<option' . ($x === $sel ? ' selected' : '') . '>' . e($x) . '</option>'; return $o; }
 function uid(): int { return (int) ($_SESSION['uid'] ?? 0); }
-function need_login(): void { if (!uid()) { header('Location: login.php'); exit; } }
+function need_login(): void {
+    global $pdo;
+    if (!uid()) { header('Location: login.php'); exit; }
+    try {
+        $statement = $pdo->prepare('SELECT is_active FROM users WHERE id=?');
+        $statement->execute([uid()]);
+        $active = $statement->fetchColumn();
+    } catch (PDOException $exception) {
+        if ($exception->getCode() !== '42S22') throw $exception;
+        return; // Keep the existing app available until the admin migration is applied.
+    }
+    if ($active === false || (int) $active !== 1) {
+        $_SESSION = [];
+        session_regenerate_id(true);
+        note('This account is disabled. Please contact an administrator.');
+        header('Location: login.php'); exit;
+    }
+}
+function current_user_is_admin(): bool {
+    global $pdo;
+    if (!uid()) return false;
+    try {
+        $statement = $pdo->prepare("SELECT role FROM users WHERE id=? AND is_active=1");
+        $statement->execute([uid()]);
+        return $statement->fetchColumn() === 'admin';
+    } catch (PDOException $exception) {
+        if ($exception->getCode() === '42S22') return false;
+        throw $exception;
+    }
+}
+function need_admin(): void {
+    need_login();
+    if (!current_user_is_admin()) { http_response_code(403); exit('Admin access is required.'); }
+}
 function token(): string { if (empty($_SESSION['csrf'])) $_SESSION['csrf'] = bin2hex(random_bytes(32)); return $_SESSION['csrf']; }
 function check_token(): void { if (!hash_equals($_SESSION['csrf'] ?? '', $_POST['csrf'] ?? '')) { http_response_code(419); exit('Form expired. Please go back and retry.'); } }
 function note(string $m): void { $_SESSION['note'] = $m; }
@@ -85,8 +118,9 @@ function head(string $title): void {
     global $pdo;
     echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
     if (uid()) {
-        echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>'
-           . '<form method="post" action="auth/logout.php"><input type="hidden" name="csrf" value="' . e(token()) . '"><button class="linkbtn">Log out</button></form>';
+        echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>';
+        if (current_user_is_admin()) echo '<a href="admin.php">Admin</a>';
+        echo '<form method="post" action="auth/logout.php"><input type="hidden" name="csrf" value="' . e(token()) . '"><button class="linkbtn">Log out</button></form>';
     } else { echo '<a href="login.php">Log in</a><a href="register.php">Join free</a>'; }
     echo '</nav></header><main>'; show_note();
 }

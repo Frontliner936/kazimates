@@ -6,7 +6,7 @@ $q = trim($_GET['q'] ?? ''); $region = trim($_GET['region'] ?? ''); $career = tr
 
 $sql = "SELECT u.id,u.full_name,p.region,p.career_interest,p.education,p.skills,p.experience,p.bio,
         (p.region=(SELECT region FROM profiles WHERE user_id=?))+(p.career_interest=(SELECT career_interest FROM profiles WHERE user_id=?))*2 AS score
-        FROM users u JOIN profiles p ON p.user_id=u.id WHERE u.id<>? AND p.is_visible=1";
+        FROM users u JOIN profiles p ON p.user_id=u.id WHERE u.id<>? AND p.is_visible=1 AND u.is_active=1";
 $args = [$me, $me, $me];
 if ($region) { $sql .= ' AND p.region=?'; $args[] = $region; }
 if ($career) { $sql .= ' AND p.career_interest=?'; $args[] = $career; }
@@ -16,7 +16,13 @@ if ($q) {
     array_push($args, $v, $v, $v);
 }
 $sql .= ' ORDER BY score DESC,u.full_name LIMIT 100';
-$s = $pdo->prepare($sql); $s->execute($args); $members = $s->fetchAll();
+try {
+    $s = $pdo->prepare($sql); $s->execute($args); $members = $s->fetchAll();
+} catch (PDOException $exception) {
+    if ($exception->getCode() !== '42S22') throw $exception;
+    $sql = str_replace(' AND u.is_active=1', '', $sql);
+    $s = $pdo->prepare($sql); $s->execute($args); $members = $s->fetchAll();
+}
 
 $s = $pdo->prepare('SELECT sender_id,receiver_id,status,created_at FROM connection_requests WHERE sender_id=? OR receiver_id=?');
 $s->execute([$me, $me]);
@@ -36,6 +42,7 @@ head('Find Mates'); ?>
 <?php elseif ($st === 'sent'): ?>Request sent
 <?php elseif ($st === 'declined'): ?><small>Not accepted yet — you can try again later.</small>
 <?php elseif ($st === 'incoming'): ?><a href="requests.php">Respond to request</a>
-<?php else: ?><form method="post" action="send_request.php"><input type="hidden" name="csrf" value="<?=e(token())?>"><input type="hidden" name="user_id" value="<?=(int)$m['id']?>"><button>Connect</button></form><?php endif; ?></div></div>
+<?php else: ?><form method="post" action="send_request.php"><input type="hidden" name="csrf" value="<?=e(token())?>"><input type="hidden" name="user_id" value="<?=(int)$m['id']?>"><button>Connect</button></form><?php endif; ?></div>
+<details class="report-widget"><summary>Report member</summary><form method="post" action="report_user.php"><input type="hidden" name="csrf" value="<?=e(token())?>"><input type="hidden" name="user_id" value="<?=(int)$m['id']?>"><label>Reason<select name="reason" required><option value="">Choose a reason</option><option>Spam or scam</option><option>Harassment or bullying</option><option>Inappropriate content</option><option>Impersonation</option><option>Other</option></select></label><label>Details <small>(optional)</small><textarea name="details" maxlength="1000" placeholder="Share relevant details"></textarea></label><button class="secondary">Send report</button></form></details></div>
 <?php endforeach; ?><?php if (!$members): ?><div class="card">No members found. Try broadening your search.</div><?php endif; ?></div>
 <?php foot();

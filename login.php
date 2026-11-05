@@ -10,15 +10,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ((int)$c['e'] >= LOGIN_MAX_EMAIL || (int)$c['i'] >= LOGIN_MAX_IP) {
         $err = 'Too many failed attempts. Please wait 15 minutes and try again.';
     } else {
-        $s = $pdo->prepare('SELECT id,password_hash FROM users WHERE email=?'); $s->execute([$email]); $u = $s->fetch();
-        if ($u && password_verify($_POST['password'] ?? '', $u['password_hash'])) {
-            $pdo->prepare('DELETE FROM login_attempts WHERE email=?')->execute([$email]);
-            session_regenerate_id(true); $_SESSION['uid'] = (int)$u['id'];
-            header('Location: dashboard.php'); exit;
+        try {
+            $s = $pdo->prepare('SELECT id,password_hash,is_active FROM users WHERE email=?');
+            $s->execute([$email]); $u = $s->fetch();
+        } catch (PDOException $exception) {
+            if ($exception->getCode() !== '42S22') throw $exception;
+            $s = $pdo->prepare('SELECT id,password_hash FROM users WHERE email=?');
+            $s->execute([$email]); $u = $s->fetch();
         }
-        $pdo->prepare('INSERT INTO login_attempts(email,ip) VALUES(?,?)')->execute([$email, $ip]);
-        $pdo->exec('DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL 1 DAY');
-        $err = 'Email or password is incorrect.';
+        if ($u && password_verify($_POST['password'] ?? '', $u['password_hash'])) {
+            if ((int) ($u['is_active'] ?? 1) !== 1) {
+                $err = 'This account is disabled. Please contact an administrator.';
+            } else {
+                $pdo->prepare('DELETE FROM login_attempts WHERE email=?')->execute([$email]);
+                session_regenerate_id(true); $_SESSION['uid'] = (int)$u['id'];
+                header('Location: dashboard.php'); exit;
+            }
+        } else {
+            $pdo->prepare('INSERT INTO login_attempts(email,ip) VALUES(?,?)')->execute([$email, $ip]);
+            $pdo->exec('DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL 1 DAY');
+            $err = 'Email or password is incorrect.';
+        }
     }
 }
 head('Log in'); ?>
