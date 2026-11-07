@@ -1,58 +1,56 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 560" role="img" aria-labelledby="title desc">
-  <title id="title">KaziMates community connections</title>
-  <desc id="desc">Three job seekers meet around a shared table, surrounded by profile and connection symbols.</desc>
-  <defs>
-    <linearGradient id="wash" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eaf0ff"/><stop offset="1" stop-color="#d7e4ff"/></linearGradient>
-    <linearGradient id="table" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffcf79"/><stop offset="1" stop-color="#ffae45"/></linearGradient>
-    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f83f4"/><stop offset="1" stop-color="#2451c7"/></linearGradient>
-    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#18366e" flood-opacity=".13"/></filter>
-  </defs>
-  <circle cx="340" cy="278" r="224" fill="url(#wash)"/>
-  <circle cx="340" cy="278" r="185" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="5 11" opacity=".9"/>
-  <path d="M105 372c42-49 84-56 124-23m222-166c48-22 83-10 117 27" fill="none" stroke="#9bb4f0" stroke-width="4" stroke-linecap="round"/>
-  <g filter="url(#shadow)">
-    <rect x="387" y="74" width="180" height="112" rx="20" fill="#fff"/>
-    <circle cx="421" cy="111" r="17" fill="#e8efff"/><path d="M414 111l5 5 10-12" fill="none" stroke="#2459d3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M450 105h85M450 119h62" stroke="#d8dfed" stroke-width="7" stroke-linecap="round"/>
-    <rect x="406" y="145" width="137" height="23" rx="11.5" fill="#eef3ff"/><circle cx="420" cy="156.5" r="6" fill="#ffb547"/><path d="M433 157h91" stroke="#91a9e8" stroke-width="5" stroke-linecap="round"/>
-  </g>
-  <g filter="url(#shadow)">
-    <rect x="79" y="198" width="126" height="73" rx="18" fill="#fff"/>
-    <circle cx="108" cy="234" r="15" fill="#ffefcf"/><path d="M102 234h12m-6-6v12" stroke="#c9801c" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M133 228h50M133 241h35" stroke="#c9d4ec" stroke-width="6" stroke-linecap="round"/>
-  </g>
-  <!-- shared table -->
-  <ellipse cx="341" cy="411" rx="183" ry="48" fill="#aec3f1" opacity=".45"/>
-  <path d="M194 351c17-36 68-56 147-56s131 20 148 56l-28 69H221z" fill="url(#table)"/>
-  <ellipse cx="341" cy="350" rx="148" ry="48" fill="#ffe0a4"/>
-  <ellipse cx="341" cy="350" rx="126" ry="33" fill="#fff7e8"/>
-  <!-- left person -->
-  <g>
-    <path d="M141 414c7-72 31-111 88-111 45 0 74 30 85 84l-5 27z" fill="#ed8068"/>
-    <path d="M182 309c9-39 38-58 75-58 36 0 61 23 61 61v20H177z" fill="#ffb547"/>
-    <ellipse cx="255" cy="212" rx="54" ry="62" fill="#9c5a3e"/>
-    <path d="M202 215c-8-60 19-91 65-91 41 0 65 28 55 82-13-19-34-31-57-32-21 15-39 24-63 25z" fill="#262944"/>
-    <circle cx="238" cy="216" r="4" fill="#252842"/><circle cx="273" cy="216" r="4" fill="#252842"/><path d="M242 237q14 12 28 0" fill="none" stroke="#75412f" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M294 328l35 26" stroke="#9c5a3e" stroke-width="18" stroke-linecap="round"/>
-  </g>
-  <!-- right person -->
-  <g>
-    <path d="M368 388c9-58 37-85 83-85 58 0 83 39 90 111H371z" fill="url(#blue)"/>
-    <ellipse cx="452" cy="216" rx="54" ry="62" fill="#70422f"/>
-    <path d="M399 216c-10-57 16-91 59-91 44 0 67 30 57 82-12-17-29-30-53-31-25 18-39 25-63 25z" fill="#20283d"/>
-    <circle cx="434" cy="218" r="4" fill="#20283d"/><circle cx="469" cy="218" r="4" fill="#20283d"/><path d="M438 239q14 12 28 0" fill="none" stroke="#512f27" stroke-width="3.5" stroke-linecap="round"/>
-    <path d="M386 330l-38 24" stroke="#70422f" stroke-width="18" stroke-linecap="round"/>
-  </g>
-  <!-- person at center -->
-  <g>
-    <path d="M258 422c5-67 31-102 80-102s75 35 80 102" fill="#2459d3"/>
-    <path d="M278 354c10-25 30-39 60-39s51 14 61 39l11 68H266z" fill="#3979e8"/>
-    <ellipse cx="338" cy="247" rx="49" ry="57" fill="#c3825c"/>
-    <path d="M289 247c-7-54 17-83 54-83 39 0 58 26 48 76-11-18-29-28-50-29-18 14-34 23-52 23z" fill="#2d2940"/>
-    <circle cx="321" cy="249" r="4" fill="#29283b"/><circle cx="354" cy="249" r="4" fill="#29283b"/><path d="M324 269q13 11 26 0" fill="none" stroke="#85573f" stroke-width="3.5" stroke-linecap="round"/>
-  </g>
-  <!-- small connection accents -->
-  <g fill="#ffb547"><path d="M565 253l7 16 17 7-17 7-7 17-7-17-17-7 17-7z"/><path d="M145 116l5 12 13 5-13 5-5 13-5-13-13-5 13-5z"/></g>
-  <g fill="#3979e8"><circle cx="541" cy="354" r="7"/><circle cx="286" cy="70" r="7"/><circle cx="110" cy="326" r="5"/></g>
-  <path d="M308 373c12 10 30 15 48 13" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".8"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 560" role="img" aria-labelledby="t d">
+<title id="t">KaziMates community connections</title>
+<desc id="d">Three job seekers collaborate at a glowing desk surrounded by floating match and connection cards.</desc>
+<defs>
+<radialGradient id="aura" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#818cf8" stop-opacity=".45"/><stop offset=".55" stop-color="#c084fc" stop-opacity=".18"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<linearGradient id="p" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4f46e5"/><stop offset=".5" stop-color="#7c3aed"/><stop offset="1" stop-color="#db2777"/></linearGradient>
+<linearGradient id="c" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
+<linearGradient id="w" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></linearGradient>
+<linearGradient id="r" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fb7185"/><stop offset="1" stop-color="#e11d48"/></linearGradient>
+<linearGradient id="desk" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#e0e7ff"/></linearGradient>
+<filter id="s" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#312e81" flood-opacity=".18"/></filter>
+<filter id="g"><feGaussianBlur stdDeviation="3"/></filter>
+</defs>
+<circle cx="340" cy="280" r="250" fill="url(#aura)"/>
+<ellipse cx="340" cy="280" rx="235" ry="185" fill="none" stroke="#c7d2fe" stroke-width="2" stroke-dasharray="5 10"/>
+<ellipse cx="340" cy="280" rx="175" ry="135" fill="none" stroke="#ddd6fe" stroke-width="1.5"/>
+<path d="M150 200Q240 130 340 160T525 175" fill="none" stroke="#a5b4fc" stroke-width="2.5" stroke-dasharray="4 7"/>
+<g filter="url(#g)"><circle cx="145" cy="150" r="6" fill="#6366f1"/><circle cx="560" cy="270" r="6" fill="#06b6d4"/><circle cx="115" cy="380" r="6" fill="#f59e0b"/><circle cx="420" cy="80" r="5" fill="#ec4899"/></g>
+<g fill="#fbbf24"><path d="M600 210l5 12 12 5-12 5-5 12-5-12-12-5 12-5z"/><path d="M170 245l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/></g>
+<ellipse cx="340" cy="450" rx="210" ry="45" fill="#4338ca" opacity=".14"/>
+<path d="M175 380c0-38 67-52 165-52s165 14 165 52l-25 50c-62 24-218 24-280 0z" fill="url(#desk)"/>
+<ellipse cx="340" cy="384" rx="112" ry="26" fill="#ede9fe"/>
+<circle cx="340" cy="383" r="16" fill="url(#p)"/><circle cx="340" cy="383" r="27" fill="none" stroke="#a78bfa" stroke-width="2"/>
+<path d="M334 384l6-6 6 6M340 379v10" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+<path d="M180 445c5-70 30-105 85-105 30 0 55 25 63 75l-18 30z" fill="url(#r)"/>
+<ellipse cx="258" cy="250" rx="46" ry="52" fill="#8d5b4c"/>
+<path d="M211 250c-6-58 20-88 59-88 35 0 50 25 45 63-15-10-30-15-50-13-25 2-40 16-54 38z" fill="#1e1b4b"/>
+<circle cx="244" cy="252" r="4" fill="#1e1b4b"/><circle cx="274" cy="252" r="4" fill="#1e1b4b"/><path d="M248 270q12 10 24 0" fill="none" stroke="#5c3a30" stroke-width="3" stroke-linecap="round"/>
+<path d="M288 362c22 14 37 23 42 23" fill="none" stroke="#8d5b4c" stroke-width="16" stroke-linecap="round"/>
+<rect x="230" y="378" width="46" height="30" rx="6" transform="rotate(-12 230 378)" fill="#1e293b"/><rect x="233" y="381" width="40" height="24" rx="4" transform="rotate(-12 230 378)" fill="url(#c)"/>
+<path d="M500 445c-6-70-28-107-83-107-30 0-55 27-63 77l18 30z" fill="url(#p)"/>
+<ellipse cx="422" cy="250" rx="46" ry="52" fill="#b4795e"/>
+<path d="M374 247c-4-60 23-90 63-90 40 0 51 30 43 73-15-18-35-25-55-22-23 4-37 18-51 39z" fill="#0f172a"/>
+<rect x="396" y="240" width="23" height="17" rx="6" fill="none" stroke="#fbbf24" stroke-width="2.5"/><rect x="427" y="240" width="23" height="17" rx="6" fill="none" stroke="#fbbf24" stroke-width="2.5"/><path d="M419 248h8" stroke="#fbbf24" stroke-width="2.5"/>
+<path d="M412 270q11 9 22 0" fill="none" stroke="#6d4231" stroke-width="3" stroke-linecap="round"/>
+<path d="M392 362c-22 14-37 23-42 23" fill="none" stroke="#b4795e" stroke-width="16" stroke-linecap="round"/>
+<path d="M408 390h48l10 14h-68z" fill="#cbd5e1"/><rect x="412" y="366" width="40" height="25" rx="3" fill="#0f172a"/><rect x="415" y="369" width="34" height="19" rx="2" fill="url(#w)"/>
+<path d="M295 445c5-70 25-100 45-100s40 30 45 100z" fill="url(#c)"/>
+<ellipse cx="340" cy="272" rx="38" ry="44" fill="#6f4332"/>
+<path d="M300 272c-2-55 18-78 40-78s42 23 40 78c-10-22-25-32-40-32s-30 10-40 32z" fill="#312e81"/>
+<circle cx="328" cy="274" r="3.5" fill="#1e293b"/><circle cx="352" cy="274" r="3.5" fill="#1e293b"/><path d="M332 289q8 7 16 0" fill="none" stroke="#4a2c1f" stroke-width="2.5" stroke-linecap="round"/>
+<g filter="url(#s)" font-family="Plus Jakarta Sans,Arial,sans-serif">
+<rect x="430" y="62" width="210" height="112" rx="22" fill="#fff" fill-opacity=".94" stroke="#fff" stroke-width="2"/>
+<circle cx="470" cy="100" r="20" fill="url(#p)"/><text x="470" y="105" font-size="13" font-weight="800" fill="#fff" text-anchor="middle">SM</text><circle cx="485" cy="114" r="6" fill="#10b981" stroke="#fff" stroke-width="2"/>
+<text x="502" y="96" font-size="13" font-weight="800" fill="#0f172a">Sarah M.</text><text x="502" y="113" font-size="11" font-weight="600" fill="#64748b">ICT · Dar es Salaam</text>
+<rect x="450" y="132" width="170" height="28" rx="14" fill="#ede9fe"/><circle cx="465" cy="146" r="7" fill="#7c3aed"/><path d="M462 146l2 2 5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/><text x="479" y="150" font-size="11" font-weight="800" fill="#5b21b6">92% shared interests</text>
+<rect x="55" y="172" width="175" height="78" rx="20" fill="#fff" fill-opacity=".94" stroke="#fff" stroke-width="2"/>
+<circle cx="92" cy="211" r="18" fill="url(#w)"/><text x="92" y="217" font-size="16" font-weight="800" fill="#fff" text-anchor="middle">✦</text>
+<text x="120" y="205" font-size="13" font-weight="800" fill="#0f172a">Connected!</text><text x="120" y="223" font-size="11" font-weight="600" fill="#64748b">Chat is now open</text>
+<rect x="70" y="420" width="190" height="70" rx="18" fill="#fff" fill-opacity=".94" stroke="#fff" stroke-width="2"/>
+<rect x="87" y="437" width="36" height="36" rx="12" fill="url(#c)"/><text x="105" y="461" font-size="18" font-weight="800" fill="#fff" text-anchor="middle">↗</text>
+<text x="134" y="451" font-size="12" font-weight="800" fill="#0f172a">New opportunity</text><text x="134" y="468" font-size="11" font-weight="600" fill="#0891b2">Shared by a mate</text>
+<rect x="478" y="412" width="160" height="50" rx="25" fill="#fff" stroke="#e2e8f0"/>
+<circle cx="503" cy="437" r="14" fill="#dcfce7"/><path d="M497 437l4 4 7-8" stroke="#15803d" stroke-width="2.5" fill="none" stroke-linecap="round"/><text x="524" y="441" font-size="12" font-weight="800" fill="#0f172a">Grow together</text>
+</g>
 </svg>
