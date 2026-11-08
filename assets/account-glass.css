@@ -1,0 +1,79 @@
+/* Shared glass theme for authenticated member and admin pages. */
+body.account-glass,
+body.account-glass main {
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(245, 200, 66, .12), transparent 34%),
+    radial-gradient(ellipse at 88% 18%, rgba(81, 153, 126, .12), transparent 38%),
+    linear-gradient(135deg, #182820, #26382f 52%, #433a20) !important;
+  color: #fff8e1 !important;
+}
+
+body.account-glass header {
+  background: rgba(15, 25, 21, .78) !important;
+  border-bottom: 1px solid rgba(255, 248, 225, .18) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+}
+body.account-glass header .logo,
+body.account-glass header nav a,
+body.account-glass header .linkbtn { color: #fff8e1 !important; }
+body.account-glass header nav a:hover,
+body.account-glass header .linkbtn:hover { color: #f5c842 !important; }
+
+body.account-glass .card,
+body.account-glass .filters,
+body.account-glass .chat,
+body.account-glass .admin-section,
+body.account-glass .admin-stat,
+body.account-glass .stat-card,
+body.account-glass .community-bottom,
+body.account-glass .request {
+  background: rgba(255, 255, 255, .09) !important;
+  border: 1px solid rgba(255, 248, 225, .2) !important;
+  color: #fff8e1 !important;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .18) !important;
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+body.account-glass h1,
+body.account-glass h2,
+body.account-glass h3,
+body.account-glass p,
+body.account-glass small,
+body.account-glass label,
+body.account-glass b,
+body.account-glass .admin-stat strong,
+body.account-glass .admin-heading p,
+body.account-glass .admin-section-heading p { color: #fff8e1 !important; }
+body.account-glass a { color: #ffe28a; }
+body.account-glass a:hover { color: #fff !important; }
+body.account-glass .eyebrow,
+body.account-glass .admin-badge,
+body.account-glass .status-pill { color: #f5c842 !important; }
+
+body.account-glass input,
+body.account-glass select,
+body.account-glass textarea {
+  background: rgba(255, 248, 225, .96) !important;
+  color: #17231e !important;
+  border-color: rgba(255, 248, 225, .55) !important;
+}
+body.account-glass input::placeholder,
+body.account-glass textarea::placeholder { color: #65736b; }
+body.account-glass footer {
+  background: rgba(15, 25, 21, .72) !important;
+  color: #e6e2d8 !important;
+  border-top: 1px solid rgba(255, 248, 225, .16) !important;
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  body.account-glass .card,
+  body.account-glass .filters,
+  body.account-glass .chat,
+  body.account-glass .admin-section,
+  body.account-glass .admin-stat,
+  body.account-glass .stat-card,
+  body.account-glass .community-bottom,
+  body.account-glass .request { background: #26342d !important; }
+}

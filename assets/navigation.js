@@ -5,6 +5,18 @@
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
   window.addEventListener('pageshow', updateHeader);
+
+  // Logged-in navigation includes Dashboard for members or Admin dashboard for admins.
+  const nav = header.querySelector('nav');
+  const isAccountPage = nav && nav.querySelector('a[href="dashboard.php"], a[href="admin.php"]');
+  if (isAccountPage) {
+    document.body.classList.add('account-glass');
+    const theme = document.createElement('link');
+    theme.rel = 'stylesheet';
+    theme.href = 'assets/account-glass.css';
+    document.head.appendChild(theme);
+  }
+
   const paths = {
     'dashboard.php': '<path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>',
     'admin.php': '<path d="M12 3 3 7v5c0 5 9 9 9 9s9-4 9-9V7l-9-4Z"/><path d="m8 12 3 3 5-6"/>',
