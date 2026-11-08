@@ -1,12 +1,13 @@
 FROM php:8.3-fpm
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libonig-dev nginx gettext-base supervisor \
-    && docker-php-ext-install pdo_mysql mbstring \
+    && apt-get install -y --no-install-recommends libonig-dev libjpeg62-turbo-dev libpng-dev libwebp-dev nginx gettext-base supervisor \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
+    && docker-php-ext-install -j"$(nproc)" pdo_mysql mbstring gd exif \
     && rm -rf /var/lib/apt/lists/* \
     && sed -ri 's/^;?clear_env = .*/clear_env = no/' /usr/local/etc/php-fpm.d/www.conf
 
-RUN printf 'upload_max_filesize=6M\npost_max_size=7M\nmax_file_uploads=1\n' > /usr/local/etc/php/conf.d/uploads.ini
+RUN printf 'upload_max_filesize=6M\npost_max_size=7M\nmax_file_uploads=1\nmemory_limit=256M\n' > /usr/local/etc/php/conf.d/uploads.ini
 
 WORKDIR /var/www/html
 COPY --chown=www-data:www-data . /var/www/html

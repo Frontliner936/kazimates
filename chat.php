@@ -110,7 +110,7 @@ try {
     note('File attachments are not enabled yet. Run migration_attachments.sql on the KaziMates database to turn them on.');
 }
 head('Messages'); ?>
-<div class="card"><h1>Chat with <?= e($person['full_name']) ?></h1><div class="chat">
+<div class="card"><div class="person"><?= avatar((int) $other, 'avatar-lg') ?><h1>Chat with <?= e($person['full_name']) ?></h1></div><div class="chat">
 <?php foreach ($messages as $message): ?><div class="bubble <?= (int) $message['sender_id'] === $me ? 'mine' : '' ?>">
 <?php if ($message['body'] !== ''): ?><?= nl2br(e($message['body'])) ?><?php endif; ?>
 <?php if ($message['attachment_id']): ?><a class="message-attachment" href="download_attachment.php?id=<?= (int) $message['attachment_id'] ?>"><span aria-hidden="true">↧</span><?= e($message['original_name']) ?><small><?= number_format(((int) $message['file_size']) / 1024, 0) ?> KB · Download</small></a><?php endif; ?>

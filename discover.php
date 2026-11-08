@@ -37,7 +37,7 @@ head('Find Mates'); ?>
 <h1>Find your KaziMates</h1><p>Profiles are matched by career interest and region. Members control whether their profiles are discoverable.</p>
 <form class="filters"><input name="q" placeholder="Search name, skills, education" value="<?=e($q)?>"><select name="region"><option value="">All regions</option><?=opts(REGIONS, $region)?></select><select name="career"><option value="">All career interests</option><?=opts(CAREERS, $career)?></select><button>Search</button></form>
 <div class="grid"><?php foreach ($members as $m): $st = $states[$m['id']] ?? ''; ?>
-<div class="card"><h2><?=e($m['full_name'])?></h2><b><?=e($m['career_interest'])?></b> · <?=e($m['region'])?><p><?=e($m['education'])?></p><p><?=e($m['bio'])?></p><small>Skills: <?=e($m['skills'])?></small>
+<div class="card"><div class="person"><?=avatar((int)$m['id'])?><h2><?=e($m['full_name'])?></h2></div><b><?=e($m['career_interest'])?></b> · <?=e($m['region'])?><p><?=e($m['education'])?></p><p><?=e($m['bio'])?></p><small>Skills: <?=e($m['skills'])?></small>
 <div class="actions"><?php if ($st === 'accepted'): ?><a class="button" href="chat.php?with=<?=(int)$m['id']?>">Message</a>
 <?php elseif ($st === 'sent'): ?>Request sent
 <?php elseif ($st === 'declined'): ?><small>Not accepted yet — you can try again later.</small>

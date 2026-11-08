@@ -117,6 +117,9 @@ function pending_total(PDO $db): int {
     $s = $db->prepare("SELECT COUNT(*) FROM connection_requests WHERE receiver_id=? AND status='pending'"); $s->execute([uid()]); return (int) $s->fetchColumn();
 }
 function badge(int $n): string { return $n > 0 ? '<span class="badge">' . min($n, 99) . ($n > 99 ? '+' : '') . '</span>' : ''; }
+function avatar(int $userId, string $class = '', int $version = 0): string {
+    return '<img class="avatar ' . e($class) . '" src="avatar.php?id=' . $userId . ($version ? '&amp;v=' . $version : '') . '" alt="" loading="lazy" width="48" height="48">';
+}
 function head(string $title): void {
     global $pdo;
     echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';

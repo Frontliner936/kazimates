@@ -35,6 +35,31 @@ The repository includes a Dockerfile. Railway detects a root-level file named `D
 
 Before deploying the attachment update, connect HeidiSQL to the KaziMates MySQL service, select the app's database, and run `migration_attachments.sql`. This additive migration creates the attachment table without changing existing accounts or messages. New installs already get the table from `database.sql`. Chat accepts one JPG, PNG, GIF, WebP, PDF, or TXT attachment per message, up to 5 MB; files are stored in MySQL and downloads are limited to the connected conversation participants.
 
+### Enable password reset and profile pictures on an existing database
+
+Run `migration_reset_avatar.sql` against the KaziMates database. It adds the `password_resets` and `profile_pictures` tables, is additive, and is safe to run more than once. New installs already get both tables from `database.sql`. Until it is run, the profile picture box is hidden and password reset emails cannot be issued.
+
+**Password reset email.** The "Forgot your password?" link on the login page emails a single-use link that expires after 60 minutes (at most 3 requests per account and 10 per IP per hour). Choose one way to send email and add the variables to the app service:
+
+```text
+APP_URL=https://your-site.up.railway.app     # used to build the reset link
+MAIL_FROM=KaziMates <no-reply@yourdomain.com>
+
+# Option A (recommended, works on every Railway plan): Resend HTTPS API
+RESEND_API_KEY=re_xxxxxxxx
+
+# Option B: any SMTP provider
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your-smtp-user
+SMTP_PASSWORD=your-smtp-password
+SMTP_SECURE=tls        # tls (port 587), ssl (port 465) or none
+```
+
+Railway blocks outbound SMTP on its Free, Trial and Hobby plans, so use Option A there. With Resend, verify a sending domain so mail can reach any member; without one it can only deliver to your own address. If neither option is configured, the forgot-password page tells members that reset email is not set up yet. Errors are written to the deploy logs as `KaziMates mail ...`.
+
+**Profile pictures.** Members can optionally upload a JPG, PNG, GIF or WebP (up to 5 MB) on the Profile page. It is cropped to a square, resized to 400x400, re-encoded as JPEG (this also removes photo metadata such as GPS location) and stored in MySQL, like chat attachments. Members without a picture show their initials. Pictures are only served to signed-in users, and only for members who are discoverable, connected to the viewer, or the viewer themselves. The Dockerfile now installs the PHP `gd` and `exif` extensions for this.
+
 ### Enable the admin area on an existing database
 
 Run `migration_admin.sql` against the KaziMates database before using the admin area. Then promote an existing account by replacing the email below with the exact email used to register that account:
