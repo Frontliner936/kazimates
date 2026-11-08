@@ -71,6 +71,7 @@ function pick_or_type(string $field, array $list, int $max = 80): ?string {
     foreach ($list as $x) if ($x !== 'Other' && mb_strtolower($x) === mb_strtolower($typed)) return $x;
     return $typed;
 }
+/** For a stored value: [dropdown selection, typed text]. A value that is not in the list shows as "Other" plus the text. */
 function split_custom(array $list, string $stored): array {
     return ($stored === '' || in_array($stored, $list, true)) ? [$stored, ''] : ['Other', $stored];
 }
@@ -78,6 +79,17 @@ function other_label(string $name, string $label, string $typed, string $placeho
     return '<label class="other-field" data-for="' . e($name) . '"><span>' . e($label) . '</span><input name="' . e($name) . '_other" maxlength="80" value="' . e($typed) . '" placeholder="' . e($placeholder) . '" autocomplete="off"></label>';
 }
 function uid(): int { return (int) ($_SESSION['uid'] ?? 0); }
+function touch_presence(PDO $db, int $userId): void {
+    if ($userId < 1 || time() - (int) ($_SESSION['presence_touch'] ?? 0) < 60) return;
+    try {
+        $statement = $db->prepare('UPDATE users SET last_seen=NOW() WHERE id=?');
+        $statement->execute([$userId]);
+        $_SESSION['presence_touch'] = time();
+    } catch (PDOException $exception) {
+        // Existing installations continue working until migration_presence.sql is applied.
+        if ($exception->getCode() !== '42S22') throw $exception;
+    }
+}
 function need_login(): void {
     global $pdo;
     if (!uid()) { header('Location: login.php'); exit; }
@@ -95,9 +107,11 @@ function need_login(): void {
         note('This account is disabled. Please contact an administrator.');
         header('Location: login.php'); exit;
     }
-    if (current_user_is_admin() && basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) !== 'admin.php') {
+    $isAdmin = current_user_is_admin();
+    if ($isAdmin && basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) !== 'admin.php') {
         header('Location: admin.php'); exit;
     }
+    if (!$isAdmin) touch_presence($pdo, uid());
 }
 function current_user_is_admin(): bool {
     global $pdo;
@@ -124,6 +138,22 @@ function connected(PDO $db, int $a, int $b): bool {
     $s->execute([$a, $b, $b, $a]);
     return (int) $s->fetchColumn() > 0;
 }
+/** Presence is intentionally returned only when the viewer and member have an accepted connection. */
+function presence_badge(PDO $db, int $viewerId, int $memberId): string {
+    if (!$viewerId || !$memberId || $viewerId === $memberId || !connected($db, $viewerId, $memberId)) return '';
+    try {
+        $statement = $db->prepare('SELECT last_seen FROM users WHERE id=? AND is_active=1');
+        $statement->execute([$memberId]);
+        $lastSeen = $statement->fetchColumn();
+    } catch (PDOException $exception) {
+        if ($exception->getCode() === '42S22') return '';
+        throw $exception;
+    }
+    $online = $lastSeen !== false && $lastSeen !== null && strtotime((string) $lastSeen) >= time() - 180;
+    $label = $online ? 'Online' : 'Offline';
+    $dot = $online ? '#35c46a' : '#89919a';
+    return '<span class="presence-status" role="status" aria-label="' . $label . '" style="display:inline-flex;align-items:center;gap:5px;margin-left:8px;font-size:12px;font-weight:600;color:' . ($online ? '#248a48' : '#68717a') . '"><span aria-hidden="true" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:' . $dot . '"></span>' . $label . '</span>';
+}
 function resend_blocked(array $r, int $me): bool {
     return $r['status'] === 'rejected' && (int) $r['sender_id'] === $me && strtotime((string) $r['created_at']) > time() - RESEND_DAYS * 86400;
 }
@@ -135,7 +165,9 @@ function pending_total(PDO $db): int {
 }
 function badge(int $n): string { return $n > 0 ? '<span class="badge">' . min($n, 99) . ($n > 99 ? '+' : '') . '</span>' : ''; }
 function avatar(int $userId, string $class = '', int $version = 0): string {
-    return '<img class="avatar ' . e($class) . '" src="avatar.php?id=' . $userId . ($version ? '&amp;v=' . $version : '') . '" alt="" loading="lazy" width="48" height="48">';
+    global $pdo;
+    $image = '<img class="avatar ' . e($class) . '" src="avatar.php?id=' . $userId . ($version ? '&amp;v=' . $version : '') . '" alt="" loading="lazy" width="48" height="48">';
+    return $image . presence_badge($pdo, uid(), $userId);
 }
 function head(string $title): void {
     global $pdo;
