@@ -8,9 +8,21 @@ body:has(.km-home) {
 }
 
 body:has(.km-home) main,
-.km-home {
-  background: transparent !important;
+.km-home { background: transparent !important; }
+
+/* Match the charcoal glass navigation used on signed-in account pages. */
+body:has(.km-home) header {
+  background: rgba(12, 14, 18, .86) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, .14) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .2) !important;
+  backdrop-filter: blur(16px) saturate(1.2);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
 }
+body:has(.km-home) header .logo,
+body:has(.km-home) header nav a,
+body:has(.km-home) header .linkbtn { color: #f5f5f5 !important; }
+body:has(.km-home) header nav a:hover,
+body:has(.km-home) header .linkbtn:hover { color: #F5C842 !important; }
 
 .km-home .landing-hero {
   background: rgba(15, 25, 21, .58) !important;
@@ -69,6 +81,7 @@ body:has(.km-home) main,
 .km-home .landing-cta h2 { color: #fff8e1 !important; }
 
 @supports not (backdrop-filter: blur(1px)) {
+  body:has(.km-home) header,
   .km-home .landing-hero,
   .km-home .visual-note,
   .km-home .landing-values,
