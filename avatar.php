@@ -49,7 +49,7 @@ $words = preg_split('/\s+/u', trim($name)) ?: [];
 $initials = '';
 foreach (array_slice(array_filter($words), 0, 2) as $word) $initials .= mb_strtoupper(mb_substr($word, 0, 1));
 if ($initials === '') $initials = '?';
-$palette = ['#6d28d9', '#147a50', '#3979a8', '#db2777', '#d97706', '#0f766e', '#4f46e5'];
+$palette = ['#0f2347', '#c2410c', '#1b3a6b', '#b45309', '#0f766e', '#1e40af', '#9a3412'];
 $color = $palette[$id % count($palette)];
 header('Content-Type: image/svg+xml; charset=utf-8');
 echo '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="' . $color . '"/>'

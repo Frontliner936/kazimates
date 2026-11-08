@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $name = (string) $user['full_name'];
                     $text = "Hello $name,\n\nWe received a request to reset your KaziMates password. Open this link to choose a new one (valid for " . RESET_TTL_MINUTES . " minutes):\n\n$link\n\nIf you did not ask for this, you can ignore this email; your password will not change.\n\n— KaziMates";
                     $html = '<p>Hello ' . e($name) . ',</p><p>We received a request to reset your KaziMates password. Click the button below to choose a new one. The link is valid for ' . RESET_TTL_MINUTES . ' minutes.</p>'
-                        . '<p><a href="' . e($link) . '" style="display:inline-block;background:#6d28d9;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:bold">Reset my password</a></p>'
+                        . '<p><a href="' . e($link) . '" style="display:inline-block;background:#c2410c;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:bold">Reset my password</a></p>'
                         . '<p style="color:#555;font-size:13px">Or paste this link into your browser:<br>' . e($link) . '</p>'
                         . '<p style="color:#555;font-size:13px">If you did not ask for this, you can ignore this email; your password will not change.</p><p>— KaziMates</p>';
                     send_mail($email, 'Reset your KaziMates password', $text, $html);
