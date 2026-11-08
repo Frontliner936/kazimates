@@ -1,0 +1,17 @@
+/* Tanzania map */
+.tz-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0}
+.tz-stats .card{margin:0;display:flex;align-items:center;gap:14px}.tz-stats b{font-size:34px;line-height:1;color:var(--y)!important}.tz-stats small{color:var(--muted)!important;font-size:13px}
+.tz-map-card{padding:16px}.tz-toggles{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:12px}.tz-toggles .check{margin:0;display:flex;align-items:center;gap:8px}.tz-toggles input{width:auto!important;margin:0!important;accent-color:#F5C842}
+.tz-key{display:inline-block;width:16px;height:16px;border-radius:50%}.tz-key-members{background:#F5C842;border:2px solid #3F320A}.tz-key-connections{background:#17201B;border:2px solid #FFF8E1}
+#tz-map{height:540px;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#cfd8cc;z-index:0}
+.tz-hint{color:var(--muted)!important;font-size:13px;margin:10px 2px 0}
+.tz-pin{background:none!important;border:0!important}
+.tz-bubble{display:block;text-align:center;border-radius:50%;font:800 13px 'DM Sans',sans-serif;box-shadow:0 3px 10px rgba(0,0,0,.35)}
+.tz-bubble-members{background:#F5C842;color:#2E2406;border:3px solid #3F320A}.tz-bubble-connections{background:#17201B;color:#FFF8E1;border:2px solid #FFF8E1;font-size:12px}
+.leaflet-container{font-family:'DM Sans',sans-serif;color:#2E2406}
+.leaflet-popup-content-wrapper{background:#FFF8E1;color:#2E2406;border-radius:12px}.leaflet-popup-tip{background:#FFF8E1}
+.tz-popup{display:flex;flex-direction:column;gap:4px;min-width:130px}.tz-popup strong{font-size:15px;color:#2E2406}
+.leaflet-container a,.tz-popup a{color:#7E5A00!important;font-weight:700;text-decoration:underline}
+.leaflet-container .leaflet-control-attribution a{color:#0f5da8!important;font-weight:400}
+.tz-people{display:flex;flex-wrap:wrap;gap:6px 14px;justify-content:flex-end}
+@media(max-width:700px){#tz-map{height:420px}.tz-stats{grid-template-columns:1fr}.tz-people{justify-content:flex-start}}
