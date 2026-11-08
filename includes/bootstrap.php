@@ -60,6 +60,24 @@ try {
 
 function e($v): string { return htmlspecialchars((string) ($v ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8'); }
 function opts(array $list, string $sel = ''): string { $o = ''; foreach ($list as $x) $o .= '<option' . ($x === $sel ? ' selected' : '') . '>' . e($x) . '</option>'; return $o; }
+
+/** Dropdown choices that also let a member type their own value: pick "Other" and fill the text box. Returns the value to store, or null if invalid. */
+function pick_or_type(string $field, array $list, int $max = 80): ?string {
+    $choice = trim((string) ($_POST[$field] ?? ''));
+    if ($choice !== 'Other') return in_array($choice, $list, true) ? $choice : null;
+    $typed = (string) ($_POST[$field . '_other'] ?? '');
+    $typed = trim((string) preg_replace('/\s+/u', ' ', (string) preg_replace('/[\x00-\x1F\x7F]/u', ' ', $typed)));
+    if ($typed === '' || mb_strlen($typed) > $max) return null;
+    foreach ($list as $x) if ($x !== 'Other' && mb_strtolower($x) === mb_strtolower($typed)) return $x; // typed a listed value: use the list spelling
+    return $typed;
+}
+/** For a stored value: [dropdown selection, typed text]. A value that is not in the list shows as "Other" plus the text. */
+function split_custom(array $list, string $stored): array {
+    return ($stored === '' || in_array($stored, $list, true)) ? [$stored, ''] : ['Other', $stored];
+}
+function other_label(string $name, string $label, string $typed, string $placeholder): string {
+    return '<label class="other-field" data-for="' . e($name) . '"><span>' . e($label) . '</span><input name="' . e($name) . '_other" maxlength="80" value="' . e($typed) . '" placeholder="' . e($placeholder) . '" autocomplete="off"></label>';
+}
 function uid(): int { return (int) ($_SESSION['uid'] ?? 0); }
 function need_login(): void {
     global $pdo;
@@ -127,7 +145,7 @@ function head(string $title): void {
         if (current_user_is_admin()) {
             echo '<a href="admin.php">Admin dashboard</a>';
         } else {
-            echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>';
+            echo '<a href="dashboard.php">Dashboard</a><a href="discover.php">Find Mates</a><a href="map.php">Map</a><a href="requests.php">Connections' . badge(pending_total($pdo) + unread_total($pdo)) . '</a><a href="profile.php">Profile</a>';
         }
         echo '<form method="post" action="auth/logout.php"><input type="hidden" name="csrf" value="' . e(token()) . '"><button class="linkbtn">Log out</button></form>';
     } else { echo '<a href="login.php">Log in</a><a href="register.php">Join free</a>'; }
