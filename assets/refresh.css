@@ -41,3 +41,58 @@ footer{background:var(--soft)!important;color:var(--muted)}
 @media(max-width:800px){.km-home .landing-hero{grid-template-columns:1fr;padding:32px 20px 44px;gap:28px;min-height:0}.km-home .landing-copy h1{font-size:38px!important;max-width:600px}.km-home .km-photo{width:100%;max-width:600px;margin:auto}.km-home .km-photo img{border-radius:8px}.km-home .note-top{top:12px;right:12px}.km-home .note-bottom{bottom:12px;left:12px}.km-home .visual-note{padding:9px 11px}.km-home .km-band{margin:28px 18px 0}.km-home .landing-values{padding:40px 20px}.km-home .value-grid{grid-template-columns:1fr}}
 @media(max-width:420px){.km-home .landing-copy h1{font-size:32px!important}.km-home .visual-note b{font-size:11px}.km-home .visual-note small{font-size:10px}.km-location{width:28px;height:28px}.km-home .visual-note{gap:7px}.km-symbol{width:18px;height:18px}header nav{gap:14px}header .km-nav-icon{width:15px;height:15px}}
 @media(prefers-reduced-motion:reduce){.km-location::after{animation:none}header{transition:none}}
+
+/* ===== Bronze theme (#7E671F) — full-site background and surface colors ===== */
+:root{--bg:#7E671F;--card:#6A5619;--soft:#5A4812;--line:#9C8231;--glass:rgba(106,86,25,.9);--g:#F5C842;--deep:#FFF8E1;--y:#F5C842;--ink:#FFF8E1;--muted:#F3EACB;--nav:#3F320A;--nav-glass:rgba(63,50,10,.82);--nav-ink:#FFF8E1;--nav-muted:#E8DDB5;--nav-border:rgba(255,248,225,.16);--photo-shade:linear-gradient(0deg,rgba(40,31,6,.92),transparent 75%);--nav-shadow:0 8px 24px rgba(30,23,4,.35)}
+html,body{background:#7E671F!important;color:var(--ink)!important}
+.km-home,.km-home .landing-hero,main{background:transparent!important}
+.km-home .landing-values{background:var(--soft)!important}
+/* Text on dark surfaces */
+h1,h2,h3,.logo,.card h2,.stat-card h2,.section-intro h2,.community-bottom h2,.value-heading h2,.value-card h3,.admin-heading h1,.admin-section h2,.admin-stat strong,.auth-panel-head h2,.visual-note b{color:var(--ink)!important}
+.landing-copy h1,.auth-story h1,.auth h1,.km-home .landing-copy h1{color:var(--ink)!important}
+.landing-copy>p,.auth-story>p,.trust-line,.value-card p,.section-intro p,.community-bottom p,.stat-card p,.admin-heading p,.admin-section-heading p,.auth-panel-head p,.auth-switch,.auth-form small,.back-home,.auth-caption,.visual-note small,.admin-stat span,.report-details,.admin-empty,.admin-report-top small,.admin-member small,.admin-audit-list small,.report-widget summary,.message-attachment small,.chat-compose label span,.bubble small,footer{color:var(--muted)!important}
+.auth-form label,.chat-compose label,label{color:var(--ink)!important}
+.value-number{color:#E0C772!important}
+a,nav a,.auth-switch a,.quiet-link,.km-home .quiet-link,.text-link,.message-attachment{color:#FFE9A8!important}
+a:hover,nav a:hover{color:#fff!important}
+header nav a,header .logo,header .linkbtn{color:var(--nav-ink)!important}
+header nav a:hover,header .linkbtn:hover{color:var(--y)!important}
+.eyebrow,.section-intro small,.community-bottom small,.km-home .landing-hero .eyebrow{color:var(--y)!important}
+.landing-copy h1 em,.auth-story h1 em,.value-heading h2 em,.auth em,.km-home .landing-copy h1 em{color:var(--y)!important;background:none!important}
+/* Buttons: gold with dark text */
+button,.button,.button-large,.button-light,.hero .button,.community-hero .button{background:#F5C842!important;color:#2E2406!important;box-shadow:0 8px 20px rgba(30,23,4,.3)!important}
+button:hover,.button:hover,.button-large:hover,.button-light:hover{background:#FFD866!important;color:#2E2406!important}
+.secondary,button.secondary{background:var(--soft)!important;color:var(--ink)!important}
+.linkbtn{background:none!important;color:#FFE9A8!important}
+/* Hero, call-to-action and photo blocks */
+.hero,.hero.community-hero{background:radial-gradient(circle at 80% 15%,rgba(245,200,66,.28),transparent 35%),linear-gradient(125deg,#3F320A,#7E671F 70%,#A8892C)!important;box-shadow:0 20px 45px rgba(30,23,4,.35)!important}
+.community-hero p,.hero p,.hero small{color:#F3EACB!important}
+.landing-cta,.km-home .landing-cta{background:var(--nav)!important}
+.landing-cta h2,.landing-cta .eyebrow{color:var(--nav-ink)!important}
+.km-band:after,.km-home .km-band:after{background:var(--photo-shade)!important}
+.landing-hero{background:transparent!important;border-color:rgba(255,248,225,.14)!important}
+.landing-visual{background:radial-gradient(ellipse at center,#8F762A 0,#7E671F 62%,#7E671F 100%)!important}
+.landing-visual:before,.landing-visual:after{border-color:#B09536!important}
+/* Cards, panels, forms */
+.card,.value-card,.stat-card,.visual-note,.filters,.auth-panel,.admin-section,.admin-stat{background:var(--card)!important;border:1px solid var(--line)!important;color:var(--ink)}
+.km-home .visual-note{color:var(--ink)!important}
+.stat-icon,.value-icon,.note-icon{background:var(--soft)!important;color:var(--y)!important}
+.community-bottom{background:var(--card)!important;border-color:var(--line)!important}
+input,select,textarea{background:#FFF8E1!important;color:#2E2406!important;border:1.5px solid #B09536!important}
+input::placeholder,textarea::placeholder{color:#7A6A3A}
+.chat-compose input[type=file]{background:#FFF8E1!important;border-color:#B09536!important}
+.admin-filters a{background:var(--soft)!important}
+.report-widget form{background:var(--soft)!important}
+.admin-report,.admin-member,.admin-audit-list>div,.report-widget,.auth-switch,.request{border-color:var(--line)!important}
+/* Chat */
+.chat{background:var(--soft)!important;border-color:var(--line)!important}
+.bubble{background:var(--card)!important;color:var(--ink)!important;border-color:var(--line)!important}
+.bubble.mine{background:#C9A63A!important;color:#2E2406!important;border:0!important}
+.bubble.mine small{color:#4A3B0C!important}
+.message-attachment{background:var(--card)!important;border-color:var(--line)!important}
+.message-attachment>span{background:var(--soft)!important}
+/* Footer and misc */
+footer{background:var(--nav)!important;border-top:1px solid var(--nav-border)!important;color:var(--nav-muted)!important}
+.avatar,.avatar-editor img,.person img{border-color:var(--y)!important;box-shadow:0 0 0 4px var(--soft)!important}
+.landing-hero:after{border-color:rgba(255,248,225,.18)!important;box-shadow:0 0 0 24px rgba(255,248,225,.05),0 0 0 50px rgba(255,248,225,.03)!important}
+.avatar{background:var(--soft)!important}
