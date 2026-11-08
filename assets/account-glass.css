@@ -9,16 +9,16 @@ body.account-glass main {
 }
 
 body.account-glass header {
-  background: rgba(15, 25, 21, .78) !important;
-  border-bottom: 1px solid rgba(255, 248, 225, .18) !important;
+  background: rgba(12, 14, 18, .86) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, .14) !important;
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
 }
 body.account-glass header .logo,
 body.account-glass header nav a,
-body.account-glass header .linkbtn { color: #fff8e1 !important; }
+body.account-glass header .linkbtn { color: #f5f5f5 !important; }
 body.account-glass header nav a:hover,
-body.account-glass header .linkbtn:hover { color: #f5c842 !important; }
+body.account-glass header .linkbtn:hover { color: #F5C842 !important; }
 
 body.account-glass .card,
 body.account-glass .filters,
@@ -51,6 +51,10 @@ body.account-glass a:hover { color: #fff !important; }
 body.account-glass .eyebrow,
 body.account-glass .admin-badge,
 body.account-glass .status-pill { color: #f5c842 !important; }
+
+/* Deep, vivid green for the connection-only online indicator. */
+body.account-glass .presence-status[aria-label="Online"] { color: #00a84f !important; }
+body.account-glass .presence-status[aria-label="Online"] > span { background: #00a84f !important; }
 
 body.account-glass input,
 body.account-glass select,
