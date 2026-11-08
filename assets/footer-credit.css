@@ -11,9 +11,24 @@ footer {
   margin-left: 8px;
   color: #b8860b;
   font-family: 'Sora', 'DM Sans', sans-serif;
-  font-size: .9rem;
-  font-weight: 800;
-  letter-spacing: .08em;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .04em;
   text-shadow: 0 1px 0 rgba(255,255,255,.55);
 }
 body.account-glass .developer-credit { color: #f5c842; text-shadow: 0 1px 8px rgba(245,200,66,.22); }
+
+/* Member-only Opportunities link */
+header nav .opportunities-link {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(245, 200, 66, .55);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: #f5c842 !important;
+  font-weight: 700;
+}
+header nav .opportunities-link:hover {
+  background: rgba(245, 200, 66, .12);
+  color: #fff !important;
+}
