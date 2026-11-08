@@ -68,10 +68,9 @@ function pick_or_type(string $field, array $list, int $max = 80): ?string {
     $typed = (string) ($_POST[$field . '_other'] ?? '');
     $typed = trim((string) preg_replace('/\s+/u', ' ', (string) preg_replace('/[\x00-\x1F\x7F]/u', ' ', $typed)));
     if ($typed === '' || mb_strlen($typed) > $max) return null;
-    foreach ($list as $x) if ($x !== 'Other' && mb_strtolower($x) === mb_strtolower($typed)) return $x; // typed a listed value: use the list spelling
+    foreach ($list as $x) if ($x !== 'Other' && mb_strtolower($x) === mb_strtolower($typed)) return $x;
     return $typed;
 }
-/** For a stored value: [dropdown selection, typed text]. A value that is not in the list shows as "Other" plus the text. */
 function split_custom(array $list, string $stored): array {
     return ($stored === '' || in_array($stored, $list, true)) ? [$stored, ''] : ['Other', $stored];
 }
@@ -88,7 +87,7 @@ function need_login(): void {
         $active = $statement->fetchColumn();
     } catch (PDOException $exception) {
         if ($exception->getCode() !== '42S22') throw $exception;
-        return; // Keep the existing app available until the admin migration is applied.
+        return;
     }
     if ($active === false || (int) $active !== 1) {
         $_SESSION = [];
@@ -140,7 +139,10 @@ function avatar(int $userId, string $class = '', int $version = 0): string {
 }
 function head(string $title): void {
     global $pdo;
-    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css?v=' . (int) @filemtime(__DIR__ . '/../assets/style.css') . '"><link rel="stylesheet" href="assets/refresh.css?v=' . (int) @filemtime(__DIR__ . '/../assets/refresh.css') . '"><script src="assets/navigation.js?v=' . (int) @filemtime(__DIR__ . '/../assets/navigation.js') . '" defer></script></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
+    $homeGlass = basename((string) ($_SERVER['SCRIPT_NAME'] ?? '')) === 'index.php'
+        ? '<link rel="stylesheet" href="assets/home-glass.css?v=' . (int) @filemtime(__DIR__ . '/../assets/home-glass.css') . '">'
+        : '';
+    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css?v=' . (int) @filemtime(__DIR__ . '/../assets/style.css') . '"><link rel="stylesheet" href="assets/refresh.css?v=' . (int) @filemtime(__DIR__ . '/../assets/refresh.css') . '">' . $homeGlass . '<script src="assets/navigation.js?v=' . (int) @filemtime(__DIR__ . '/../assets/navigation.js') . '" defer></script></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
     if (uid()) {
         if (current_user_is_admin()) {
             echo '<a href="admin.php">Admin dashboard</a>';
