@@ -22,6 +22,14 @@
   if (window.location.pathname.split('/').pop() === 'login.php') {
     addStylesheet('assets/login-glass.css');
   }
+  addStylesheet('assets/footer-credit.css');
+  const footer = document.querySelector('footer');
+  if (footer && !footer.querySelector('.developer-credit')) {
+    const credit = document.createElement('span');
+    credit.className = 'developer-credit';
+    credit.textContent = 'Developer ARCHIE';
+    footer.appendChild(credit);
+  }
 
   const paths = {
     'dashboard.php': '<path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>',
