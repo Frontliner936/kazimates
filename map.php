@@ -66,6 +66,7 @@ head('Tanzania map'); ?>
 <?php endif; ?>
 <script type="application/json" id="tz-data"><?= json_encode($data, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_UNICODE) ?></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="assets/tz-map.css?v=<?= (int) @filemtime(__DIR__ . '/assets/tz-map.css') ?>">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="assets/tz-map.js?v=<?= (int) @filemtime(__DIR__ . '/assets/tz-map.js') ?>"></script>
 <?php foot(); ?>
