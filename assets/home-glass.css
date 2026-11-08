@@ -1,0 +1,77 @@
+/* Homepage glass treatment — scoped to the public landing page. */
+body:has(.km-home) {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(245, 200, 66, .16), transparent 34%),
+    radial-gradient(ellipse at 88% 18%, rgba(81, 153, 126, .18), transparent 38%),
+    linear-gradient(135deg, #182820, #26382f 52%, #433a20) !important;
+  color: #fff8e1 !important;
+}
+
+body:has(.km-home) main,
+.km-home {
+  background: transparent !important;
+}
+
+.km-home .landing-hero {
+  background: rgba(15, 25, 21, .58) !important;
+  border: 1px solid rgba(255, 248, 225, .2) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, .24), inset 0 1px rgba(255, 255, 255, .09) !important;
+  backdrop-filter: blur(18px) saturate(1.25);
+  -webkit-backdrop-filter: blur(18px) saturate(1.25);
+}
+
+.km-home .landing-copy h1,
+.km-home .landing-copy>p,
+.km-home .trust-line { color: #fff8e1 !important; }
+.km-home .landing-copy h1 em { color: #f5c842 !important; }
+.km-home .landing-hero .eyebrow { color: #f5c842 !important; }
+.km-home .quiet-link { color: #fff0b8 !important; }
+
+.km-home .visual-note {
+  background: rgba(16, 25, 21, .72) !important;
+  color: #fff8e1 !important;
+  border: 1px solid rgba(255, 248, 225, .2) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .25) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.km-home .visual-note b,
+.km-home .visual-note small { color: #fff8e1 !important; }
+
+.km-home .landing-values {
+  background: rgba(15, 25, 21, .48) !important;
+  border-top: 1px solid rgba(255, 248, 225, .12);
+  border-bottom: 1px solid rgba(255, 248, 225, .12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.km-home .value-heading h2,
+.km-home .value-heading h2 em { color: #fff8e1 !important; }
+.km-home .value-card {
+  background: rgba(255, 255, 255, .09) !important;
+  border: 1px solid rgba(255, 248, 225, .18) !important;
+  color: #fff8e1 !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .14) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.km-home .value-card h3,
+.km-home .value-card p { color: #fff8e1 !important; }
+
+.km-home .landing-cta {
+  background: rgba(15, 25, 21, .72) !important;
+  border: 1px solid rgba(255, 248, 225, .18) !important;
+  border-radius: 22px !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.km-home .landing-cta h2 { color: #fff8e1 !important; }
+
+@supports not (backdrop-filter: blur(1px)) {
+  .km-home .landing-hero,
+  .km-home .visual-note,
+  .km-home .landing-values,
+  .km-home .value-card,
+  .km-home .landing-cta { background-color: #26342d !important; }
+}
