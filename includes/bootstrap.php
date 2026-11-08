@@ -122,7 +122,7 @@ function avatar(int $userId, string $class = '', int $version = 0): string {
 }
 function head(string $title): void {
     global $pdo;
-    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
+    echo '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' . e($title) . ' | KaziMates</title><link rel="stylesheet" href="assets/style.css?v=' . (int) @filemtime(__DIR__ . '/../assets/style.css') . '"></head><body><header><a class="logo" href="'.(uid()?'dashboard.php':'index.php').'">✦ KaziMates</a><nav>';
     if (uid()) {
         if (current_user_is_admin()) {
             echo '<a href="admin.php">Admin dashboard</a>';
@@ -133,4 +133,4 @@ function head(string $title): void {
     } else { echo '<a href="login.php">Log in</a><a href="register.php">Join free</a>'; }
     echo '</nav></header><main>'; show_note();
 }
-function foot(): void { echo '</main><footer>KaziMates · Find Your People. Share Opportunities. Grow Together.</footer></body></html>'; }
+function foot(): void { echo '</main><footer>© KaziMates</footer></body></html>'; }

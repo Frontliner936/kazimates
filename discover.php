@@ -34,15 +34,15 @@ foreach ($s as $r) {
     else $states[$other] = resend_blocked($r, $me) ? 'declined' : '';   // declined: show Connect again once allowed
 }
 head('Find Mates'); ?>
-<h1>Find your KaziMates</h1><p>Profiles are matched by career interest and region. Members control whether their profiles are discoverable.</p>
+<h1>Find members</h1><p>Filter by career interest and region.</p>
 <form class="filters"><input name="q" placeholder="Search name, skills, education" value="<?=e($q)?>"><select name="region"><option value="">All regions</option><?=opts(REGIONS, $region)?></select><select name="career"><option value="">All career interests</option><?=opts(CAREERS, $career)?></select><button>Search</button></form>
 <div class="grid"><?php foreach ($members as $m): $st = $states[$m['id']] ?? ''; ?>
 <div class="card"><div class="person"><?=avatar((int)$m['id'])?><h2><?=e($m['full_name'])?></h2></div><b><?=e($m['career_interest'])?></b> · <?=e($m['region'])?><p><?=e($m['education'])?></p><p><?=e($m['bio'])?></p><small>Skills: <?=e($m['skills'])?></small>
 <div class="actions"><?php if ($st === 'accepted'): ?><a class="button" href="chat.php?with=<?=(int)$m['id']?>">Message</a>
 <?php elseif ($st === 'sent'): ?>Request sent
-<?php elseif ($st === 'declined'): ?><small>Not accepted yet — you can try again later.</small>
+<?php elseif ($st === 'declined'): ?><small>Request declined. Try again later.</small>
 <?php elseif ($st === 'incoming'): ?><a href="requests.php">Respond to request</a>
 <?php else: ?><form method="post" action="send_request.php"><input type="hidden" name="csrf" value="<?=e(token())?>"><input type="hidden" name="user_id" value="<?=(int)$m['id']?>"><button>Connect</button></form><?php endif; ?></div>
 <details class="report-widget"><summary>Report member</summary><form method="post" action="report_user.php"><input type="hidden" name="csrf" value="<?=e(token())?>"><input type="hidden" name="user_id" value="<?=(int)$m['id']?>"><label>Reason<select name="reason" required><option value="">Choose a reason</option><option>Spam or scam</option><option>Harassment or bullying</option><option>Inappropriate content</option><option>Impersonation</option><option>Other</option></select></label><label>Details <small>(optional)</small><textarea name="details" maxlength="1000" placeholder="Share relevant details"></textarea></label><button class="secondary">Send report</button></form></details></div>
-<?php endforeach; ?><?php if (!$members): ?><div class="card">No members found. Try broadening your search.</div><?php endif; ?></div>
+<?php endforeach; ?><?php if (!$members): ?><div class="card">No members found.</div><?php endif; ?></div>
 <?php foot();

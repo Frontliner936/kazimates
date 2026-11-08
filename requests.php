@@ -27,9 +27,9 @@ $statement = $pdo->prepare("SELECT u.id,u.full_name,p.region,p.career_interest,(
 $statement->execute([$me, $me, $me, $me]);
 $connections = $statement->fetchAll();
 head('Connections'); ?>
-<h1>Connection requests</h1><div class="card"><h2>Received requests (<?= count($incoming) ?>)</h2>
+<h1>Connections</h1><div class="card"><h2>Requests (<?= count($incoming) ?>)</h2>
 <?php foreach ($incoming as $request): ?><div class="request"><div class="person"><?= avatar((int) $request['sender_id']) ?><div><b><?= e($request['full_name']) ?></b><small><?= e($request['career_interest']) ?> · <?= e($request['region']) ?></small></div></div>
 <form method="post"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><input type="hidden" name="rid" value="<?= (int) $request['id'] ?>"><button name="act" value="accept">Accept</button><button class="secondary" name="act" value="decline">Decline</button></form></div><?php endforeach; ?>
-<?php if (!$incoming): ?><p>No incoming requests.</p><?php endif; ?></div><div class="card"><h2>Your connections</h2>
+<?php if (!$incoming): ?><p>No pending requests.</p><?php endif; ?></div><div class="card"><h2>Your connections</h2>
 <?php foreach ($connections as $connection): ?><div class="request"><div class="person"><?= avatar((int) $connection['id']) ?><div><b><?= e($connection['full_name']) ?></b><small><?= e($connection['career_interest']) ?> · <?= e($connection['region']) ?></small></div></div><a class="button" href="chat.php?with=<?= (int) $connection['id'] ?>">Message<?= badge((int) $connection['unread']) ?></a></div><?php endforeach; ?>
-<?php if (!$connections): ?><p>Your accepted connections will appear here.</p><?php endif; ?></div><?php foot(); ?>
+<?php if (!$connections): ?><p>No connections yet.</p><?php endif; ?></div><?php foot(); ?>

@@ -46,8 +46,8 @@ if ($reset && $_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 head('Reset password'); ?>
-<section class="auth-shell"><div class="auth-story"><a class="back-home" href="login.php">← Back to log in</a><span class="eyebrow">ALMOST THERE</span><h1>Choose a new<br><em>password.</em></h1><p>Pick something you haven't used elsewhere. You'll be asked to log in again afterwards.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"><div class="auth-caption">A fresh start, in one step.</div></div>
-<div class="auth-panel"><div class="auth-panel-head"><span class="eyebrow">SET A NEW PASSWORD</span><h2>Reset your password.</h2></div>
+<section class="auth-shell"><div class="auth-story"><a class="back-home" href="login.php">← Back to log in</a><span class="eyebrow">KAZIMATES</span><h1>New<br><em>password.</em></h1><p>Choose a new password for your account.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"></div>
+<div class="auth-panel"><div class="auth-panel-head"><h2>Set new password</h2></div>
 <?php if (!$reset): ?><p class="error">This reset link is invalid or has expired. Reset links work once and last 60 minutes.</p><p class="auth-switch"><a href="forgot_password.php">Request a new link</a></p>
 <?php else: ?><?php if ($error): ?><p class="error"><?= e($error) ?></p><?php endif; ?>
 <form method="post" class="auth-form"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><input type="hidden" name="token" value="<?= e($token) ?>"><label>New password <small>(more than 6 characters)</small><input type="password" name="password" autocomplete="new-password" minlength="7" required></label><label>Confirm new password<input type="password" name="confirm" autocomplete="new-password" minlength="7" required></label><button class="button button-large">Update password <span>→</span></button></form><?php endif; ?></div></section><?php foot(); ?>

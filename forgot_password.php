@@ -51,9 +51,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 head('Forgot password'); ?>
-<section class="auth-shell"><div class="auth-story"><a class="back-home" href="login.php">← Back to log in</a><span class="eyebrow">NO WORRIES</span><h1>Locked out?<br><em>We'll get you back in.</em></h1><p>Enter the email you registered with and we'll send you a secure link to choose a new password.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"><div class="auth-caption">It only takes a minute.</div></div>
-<div class="auth-panel"><div class="auth-panel-head"><span class="eyebrow">RESET YOUR PASSWORD</span><h2>Forgot your password?</h2><p>We'll email you a reset link.</p></div>
+<section class="auth-shell"><div class="auth-story"><a class="back-home" href="login.php">← Back to log in</a><span class="eyebrow">KAZIMATES</span><h1>Forgot<br><em>password?</em></h1><p>We will email you a link to reset it.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"></div>
+<div class="auth-panel"><div class="auth-panel-head"><h2>Reset password</h2><p>Enter your registered email.</p></div>
 <?php if ($error): ?><p class="error"><?= e($error) ?></p><?php endif; ?>
-<?php if ($sent): ?><div class="notice">If an account exists for that email, a reset link is on its way. It expires in <?= RESET_TTL_MINUTES ?> minutes. Check your spam folder too.</div><p class="auth-switch"><a href="login.php">Back to log in</a></p>
+<?php if ($sent): ?><div class="notice">If an account exists for that email, a reset link has been sent. It expires in <?= RESET_TTL_MINUTES ?> minutes.</div><p class="auth-switch"><a href="login.php">Back to log in</a></p>
 <?php else: ?><form method="post" class="auth-form"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><label>Email address<input type="email" name="email" placeholder="you@example.com" autocomplete="email" required maxlength="190"></label><button class="button button-large">Send reset link <span>→</span></button></form>
-<p class="auth-switch">Remembered it? <a href="login.php">Log in</a></p><?php endif; ?></div></section><?php foot(); ?>
+<p class="auth-switch"><a href="login.php">Back to log in</a></p><?php endif; ?></div></section><?php foot(); ?>

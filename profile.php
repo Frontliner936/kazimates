@@ -49,12 +49,12 @@ try {
     $pictureReady = false; // migration_reset_avatar.sql not applied yet
 }
 head('My profile'); ?>
-<div class="card"><h1>My career profile</h1><p>Your email and private contact details are not shown in member search.</p>
-<?php if ($pictureReady): ?><div class="avatar-editor"><?= avatar($id, 'avatar-xl', $pictureVersion) ?><div><h2>Profile picture <small>(optional)</small></h2><p>JPG, PNG, GIF or WebP, up to 5 MB. It is cropped to a square. Without one, your initials are shown.</p>
+<div class="card"><h1>My career profile</h1><p>Your email is never shown to other members.</p>
+<?php if ($pictureReady): ?><div class="avatar-editor"><?= avatar($id, 'avatar-xl', $pictureVersion) ?><div><h2>Profile picture <small>(optional)</small></h2><p>JPG, PNG, GIF or WebP, up to 5 MB.</p>
 <form method="post" action="profile_picture.php" enctype="multipart/form-data" class="avatar-form"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><input type="file" name="picture" accept="image/jpeg,image/png,image/gif,image/webp" required><button>Upload picture</button></form>
 <?php if ($hasPicture): ?><form method="post" action="profile_picture.php" class="avatar-form"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><input type="hidden" name="action" value="remove"><button class="linkbtn">Remove picture</button></form><?php endif; ?></div></div><?php endif; ?>
 <form method="post"><input type="hidden" name="csrf" value="<?= e(token()) ?>"><label>Full name<input name="name" value="<?= e($profile['full_name']) ?>" required maxlength="120"></label><label>Email<input value="<?= e($profile['email']) ?>" disabled></label>
 <label>Region<select name="region" required><?= opts(REGIONS, (string) $profile['region']) ?></select></label><label>Career interest<select name="career" required><?= opts(CAREERS, (string) $profile['career_interest']) ?></select></label>
 <label>Education<input name="education" maxlength="190" value="<?= e($profile['education']) ?>"></label><label>Skills (comma separated)<textarea name="skills" maxlength="5000"><?= e($profile['skills']) ?></textarea></label>
 <label>Experience<input name="experience" maxlength="190" value="<?= e($profile['experience']) ?>"></label><label>Opportunity sought<select name="job_type" required><?= opts(JOB_TYPES, (string) $profile['job_type']) ?></select></label>
-<label>About me<textarea name="bio" maxlength="5000"><?= e($profile['bio']) ?></textarea></label><label class="check"><input type="checkbox" name="visible" <?= $profile['is_visible'] ? 'checked' : '' ?>> Allow members to discover my profile</label><button>Save profile</button></form></div><?php foot(); ?>
+<label>About me<textarea name="bio" maxlength="5000"><?= e($profile['bio']) ?></textarea></label><label class="check"><input type="checkbox" name="visible" <?= $profile['is_visible'] ? 'checked' : '' ?>> Visible in member search</label><button>Save profile</button></form></div><?php foot(); ?>

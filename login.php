@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 head('Log in'); ?>
-<section class="auth-shell"><div class="auth-story"><a class="back-home" href="index.php">← Back to KaziMates</a><span class="eyebrow">WELCOME BACK</span><h1>Your people are<br>right where you<br><em>left them.</em></h1><p>Pick up where you left off. Your community is here to share ideas, encouragement and the next step forward.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"><div class="auth-caption">A little support can go a long way.</div></div>
-<div class="auth-panel"><div class="auth-panel-head"><span class="eyebrow">YOUR COMMUNITY AWAITS</span><h2>Welcome back.</h2><p>Log in to your KaziMates account.</p></div><?php if ($err): ?><p class="error"><?=e($err)?></p><?php endif; ?>
+<section class="auth-shell"><div class="auth-story"><a class="back-home" href="index.php">← Back to home</a><span class="eyebrow">KAZIMATES</span><h1>Welcome<br><em>back.</em></h1><p>Log in to continue to your account.</p><img src="assets/community-illustration.svg" alt="" class="auth-illustration"></div>
+<div class="auth-panel"><div class="auth-panel-head"><h2>Log in</h2><p>Enter your email and password.</p></div><?php if ($err): ?><p class="error"><?=e($err)?></p><?php endif; ?>
 <form method="post" class="auth-form"><input type="hidden" name="csrf" value="<?=e(token())?>"><label>Email address<input type="email" name="email" placeholder="you@example.com" autocomplete="email" required></label><label>Password<input type="password" name="password" placeholder="Enter your password" autocomplete="current-password" required></label><p class="auth-switch"><a href="forgot_password.php">Forgot your password?</a></p><button class="button button-large">Log in <span>→</span></button></form>
-<p class="auth-switch">New to KaziMates? <a href="register.php">Create your account</a></p></div></section>
+<p class="auth-switch">No account? <a href="register.php">Create one</a></p></div></section>
 <?php foot();
