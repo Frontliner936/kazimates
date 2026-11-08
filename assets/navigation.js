@@ -8,6 +8,7 @@
 
   const nav = header.querySelector('nav');
   const isAccountPage = nav && nav.querySelector('a[href="dashboard.php"], a[href="admin.php"]');
+  const isMemberPage = nav && nav.querySelector('a[href="dashboard.php"]');
   const addStylesheet = (href) => {
     if (document.querySelector('link[href="' + href + '"]')) return;
     const theme = document.createElement('link');
@@ -29,6 +30,16 @@
     credit.className = 'developer-credit';
     credit.textContent = 'Developer ARCHIE';
     footer.appendChild(credit);
+  }
+
+  if (isMemberPage && !nav.querySelector('.opportunities-link')) {
+    const opportunities = document.createElement('a');
+    opportunities.className = 'opportunities-link';
+    opportunities.href = 'https://www.michongodaily.site';
+    opportunities.textContent = 'Opportunities';
+    opportunities.target = '_blank';
+    opportunities.rel = 'noopener noreferrer';
+    nav.insertBefore(opportunities, nav.querySelector('a[href="profile.php"]') || nav.querySelector('form'));
   }
 
   const paths = {
