@@ -1,0 +1,19 @@
+/* Footer credit */
+footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.developer-credit {
+  display: inline-block;
+  margin-left: 8px;
+  color: #b8860b;
+  font-family: 'Sora', 'DM Sans', sans-serif;
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-shadow: 0 1px 0 rgba(255,255,255,.55);
+}
+body.account-glass .developer-credit { color: #f5c842; text-shadow: 0 1px 8px rgba(245,200,66,.22); }
