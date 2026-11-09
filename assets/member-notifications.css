@@ -1,0 +1,28 @@
+/* Member inbox and connection-request reminder. */
+.message-inbox { max-width: 1000px; margin: 0 auto; padding: 34px 22px 64px; }
+.message-inbox-heading { margin-bottom: 22px; }
+.message-inbox-heading h1 { margin: 8px 0; }
+.message-inbox-heading p { margin: 0; }
+.message-inbox-list { padding: 22px; }
+.message-conversation { align-items: center; gap: 16px; }
+.message-conversation .button { white-space: nowrap; }
+.message-reminder-backdrop {
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center;
+  padding: 20px; background: rgba(5, 10, 8, .68); backdrop-filter: blur(7px);
+}
+.message-reminder {
+  width: min(100%, 440px); padding: 28px; border-radius: 20px;
+  background: rgba(31, 48, 39, .97); color: #fff8e1;
+  border: 1px solid rgba(255, 248, 225, .24);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .4); text-align: center;
+}
+.message-reminder h2 { color: #fff8e1; margin: 0 0 10px; }
+.message-reminder p { color: #f3ead2; margin: 0 0 20px; }
+.message-reminder-actions { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.message-reminder-actions a,
+.message-reminder-actions button { min-height: 42px; }
+@media (max-width: 600px) {
+  .message-inbox { padding: 24px 14px 46px; }
+  .message-inbox-list { padding: 16px; }
+  .message-conversation { align-items: flex-start; flex-direction: column; }
+}

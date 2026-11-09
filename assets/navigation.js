@@ -20,9 +20,8 @@
     document.body.classList.add('account-glass');
     addStylesheet('assets/account-glass.css');
   }
-  if (window.location.pathname.split('/').pop() === 'login.php') {
-    addStylesheet('assets/login-glass.css');
-  }
+  const path = window.location.pathname.split('/').pop();
+  if (path === 'login.php') addStylesheet('assets/login-glass.css');
   addStylesheet('assets/footer-credit.css');
   const footer = document.querySelector('footer');
   if (footer && !footer.querySelector('.developer-credit')) {
@@ -32,14 +31,55 @@
     footer.appendChild(credit);
   }
 
-  if (isMemberPage && !nav.querySelector('.opportunities-link')) {
-    const opportunities = document.createElement('a');
-    opportunities.className = 'opportunities-link';
-    opportunities.href = 'https://www.michongodaily.site';
-    opportunities.textContent = 'Opportunities';
-    opportunities.target = '_blank';
-    opportunities.rel = 'noopener noreferrer';
-    nav.insertBefore(opportunities, nav.querySelector('a[href="profile.php"]') || nav.querySelector('form'));
+  if (isMemberPage) {
+    addStylesheet('assets/member-notifications.css');
+    if (!nav.querySelector('.opportunities-link')) {
+      const opportunities = document.createElement('a');
+      opportunities.className = 'opportunities-link';
+      opportunities.href = 'https://www.michongodaily.site';
+      opportunities.textContent = 'Opportunities';
+      opportunities.target = '_blank';
+      opportunities.rel = 'noopener noreferrer';
+      nav.insertBefore(opportunities, nav.querySelector('a[href="profile.php"]') || nav.querySelector('form'));
+    }
+    const messagesLink = nav.querySelector('a[href="messages.php"]') || document.createElement('a');
+    messagesLink.href = 'messages.php';
+    messagesLink.textContent = 'Messages';
+    messagesLink.classList.add('messages-nav-link');
+    if (!messagesLink.parentNode) {
+      const connectionsLink = nav.querySelector('a[href="requests.php"]');
+      nav.insertBefore(messagesLink, connectionsLink ? connectionsLink.nextSibling : (nav.querySelector('form') || null));
+    }
+
+    fetch('member-counts.php', { credentials: 'same-origin', cache: 'no-store' })
+      .then(response => response.ok ? response.json() : null)
+      .then(counts => {
+        if (!counts) return;
+        const unread = Number(counts.unread_messages) || 0;
+        const pending = Number(counts.pending_requests) || 0;
+        if (unread > 0) {
+          const badge = document.createElement('span');
+          badge.className = 'badge';
+          badge.textContent = unread > 99 ? '99+' : String(unread);
+          badge.setAttribute('aria-label', unread + ' unread messages');
+          messagesLink.append(' ', badge);
+        }
+        const noticeKey = 'km-connection-request-reminder';
+        if (pending > 0 && !sessionStorage.getItem(noticeKey)) {
+          sessionStorage.setItem(noticeKey, 'shown');
+          const backdrop = document.createElement('div');
+          backdrop.className = 'message-reminder-backdrop';
+          backdrop.setAttribute('role', 'presentation');
+          backdrop.innerHTML = '<section class="message-reminder" role="alertdialog" aria-modal="true" aria-labelledby="connection-reminder-title"><h2 id="connection-reminder-title">You have connection request' + (pending === 1 ? '' : 's') + '</h2><p>You have ' + pending + ' pending request' + (pending === 1 ? '' : 's') + '. Review and accept requests to connect with other members.</p><div class="message-reminder-actions"><a class="button" href="requests.php">View requests</a><button type="button" class="secondary" data-dismiss-reminder>Later</button></div></section>';
+          document.body.appendChild(backdrop);
+          backdrop.querySelector('[data-dismiss-reminder]').addEventListener('click', () => backdrop.remove());
+          backdrop.addEventListener('click', event => { if (event.target === backdrop) backdrop.remove(); });
+        }
+      })
+      .catch(() => {});
+
+    const logoutForm = nav.querySelector('form[action*="logout"]');
+    if (logoutForm) logoutForm.addEventListener('submit', () => sessionStorage.removeItem('km-connection-request-reminder'));
   }
 
   const paths = {
